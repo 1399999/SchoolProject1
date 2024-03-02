@@ -90,21 +90,16 @@
 
 @code
 {
-    private TableValues _tableValues = new();
+    private List<TableValues3> _tableValues = new();
 
-    public TableValues TableValues
+    private List<TableValues3> TableValues
     {
         get 
         {
-            TableValues = StandardModel.TableValues;
-            return _tableValues; 
+            return _tableValues;
         }
         set 
-        { 
-            StandardModel.TableValues = TableValues;
-
-            StandardModel.TableValues.Table1.
-
+        {
             _tableValues = value; 
         }
     }

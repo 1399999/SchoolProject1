@@ -36,9 +36,9 @@ public class TableValues5
 
 public class TableValues
 {
-    public TableValues1 Table1 { get; set; } = new();
-    public TableValues2 Table2 { get; set; } = new();
-    public TableValues3 Table3 { get; set; } = new();
-    public TableValues4 Table4 { get; set; } = new();
-    public TableValues5 Table5 { get; set; } = new();
+    public List<TableValues1> Table1 { get; set; } = new();
+    public List<TableValues2> Table2 { get; set; } = new();
+    public List<TableValues3> Table3 { get; set; } = new();
+    public List<TableValues4> Table4 { get; set; } = new();
+    public List<TableValues5> Table5 { get; set; } = new();
 }
