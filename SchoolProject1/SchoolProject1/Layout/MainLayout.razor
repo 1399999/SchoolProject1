@@ -1,12 +1,17 @@
 ﻿@inherits LayoutComponentBase
 <div class="page">
-    @* <div class="sidebar">
-        <NavMenu />
-    </div> *@
-
     <main>
-        <div class="top-row px-4">
-            <p>27.02.2024</p>
+        <div class="top-row px-4 w-100">
+            @if (StandardModel.IsSettings)
+            {
+                <NavLink style="float: left" class="btn btn-primary" href="settings">Back To Home</NavLink>
+            }
+
+            else
+            {
+                <NavLink style="float: left" class="btn btn-primary" href="settings">Settings</NavLink>
+            }
+            <p>01.03.2024</p>
         </div>
 
         <article class="content px-4">

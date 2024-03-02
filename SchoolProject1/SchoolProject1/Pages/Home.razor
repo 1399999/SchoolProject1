@@ -90,9 +90,26 @@
 
 @code
 {
-    List<TableValues> TableValues { get; set; } = new();
+    private TableValues _tableValues = new();
 
-    void AddInstances() // Change
+    public TableValues TableValues
+    {
+        get 
+        {
+            TableValues = StandardModel.TableValues;
+            return _tableValues; 
+        }
+        set 
+        { 
+            StandardModel.TableValues = TableValues;
+
+            StandardModel.TableValues.Table1.
+
+            _tableValues = value; 
+        }
+    }
+
+    void AddInstances()
     {
         TableValues.Add(new());
     }

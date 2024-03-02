@@ -1,0 +1,40 @@
+﻿@page "/settings"
+
+<PageTitle>Settings</PageTitle>
+
+<h1 class="w-100 text-center">Settings</h1>
+
+<select class="form-select" aria-label="Default select example" style="width: 200px">
+    <option value="1" @onselect="OnSelected1">1 Column</option>
+    <option value="2">2 Columns</option>
+    <option selected>3 Columns</option>
+    <option value="4">4 Columns</option>
+    <option value="5">5 Columns</option>
+</select>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StandardModel.IsSettings = true;
+    }
+
+    void OnSelected1()
+    {
+        var a = Foo(StandardModel.TableValues);
+    }
+
+    string Foo<T>(T parameter) 
+    { 
+        return typeof(T).Name; 
+    }
+
+    object ConvertNumber(int i)
+    {
+        if (i == 1) return typeof(TableValues1);
+        else if (i == 2) return typeof(TableValues2);
+        else if (i == 3) return typeof(TableValues);
+        else if (i == 4) return typeof(TableValues4);
+        else if (i == 5) return typeof(TableValues5);
+        else return null;
+    }
+}
