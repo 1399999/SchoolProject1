@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using SchoolProject1.Functionality
+@inject NavigationManager _nav
+
 <html>
     <body>
         <div style="width: 100%; overflow:auto;" class="vh-100">
@@ -14,17 +16,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in TableValues)
+                        @foreach (var item in TableValuesTemp)
                             {
                                 <tr>
                                     <td>
-                                        <input role="textbox" rows="1" @bind="item.Column1" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" />
                                     </td>
                                     <td>
-                                        <input role="textbox" rows="1" @bind="item.Column2" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" />
                                     </td>
                                     <td>
-                                        <input role="textbox" rows="1" @bind="item.Column3" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn3(item, e))" value="@item.Column3" />
                                     </td>
                                 </tr>
                             }
@@ -37,7 +39,7 @@
                 <br />
                 <br />
 
-                @for (int i = 0; i < TableValues.Count; i++)
+                @for (int i = 0; i < TableValuesTemp.Count; i++)
                 {
                     var j = i;
 
@@ -92,7 +94,7 @@
 {
     private List<TableValues3> _tableValues = new();
 
-    private List<TableValues3> TableValues
+    private List<TableValues3> TableValuesTemp
     {
         get 
         {
@@ -104,16 +106,47 @@
         }
     }
 
-    void AddInstances()
+    protected override void OnInitialized()
     {
-        TableValues.Add(new());
-    }
-
-    void DeleteIndex(int i)
-    {
-        TableValues.RemoveAt(i);
+        StandardModel.IsSettings = false;
     }
 
     string GetTime() => $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}";
     string GetDate() => $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}";
+
+    void AddInstances() 
+    { 
+        TableValuesTemp.Add(new());
+        TableValuesTemp.Cast<object>().ToList().Update();
+    }
+
+    void DeleteIndex(int i)
+    { 
+        TableValuesTemp.RemoveAt(i);
+        TableValuesTemp.Cast<object>().ToList().Update();
+    }
+
+    void EditColumn1(TableValues3 item, ChangeEventArgs e)
+    {
+        int index = TableValuesTemp.IndexOf(item);
+
+        TableValuesTemp[index].Column1 = e.Value.ToString();
+        TableValuesTemp.Cast<object>().ToList().Update();
+    }
+
+    void EditColumn2(TableValues3 item, ChangeEventArgs e)
+    {
+        int index = TableValuesTemp.IndexOf(item);
+
+        TableValuesTemp[index].Column2 = e.Value.ToString();
+        TableValuesTemp.Cast<object>().ToList().Update();
+    }
+
+    void EditColumn3(TableValues3 item, ChangeEventArgs e)
+    {
+        int index = TableValuesTemp.IndexOf(item);
+
+        TableValuesTemp[index].Column3 = e.Value.ToString();
+        TableValuesTemp.Cast<object>().ToList().Update();
+    }
 }

@@ -5,28 +5,78 @@
 <h1 class="w-100 text-center">Settings</h1>
 
 <select class="form-select" aria-label="Default select example" style="width: 200px">
-    <option value="1" @onselect="OnSelected1">1 Column</option>
-    <option value="2">2 Columns</option>
-    <option selected>3 Columns</option>
-    <option value="4">4 Columns</option>
-    <option value="5">5 Columns</option>
+    @if (StandardModel.ColumnCount == 1)
+    {
+        <option selected @onselect="ChangeColumns1">1 Column</option>
+    }
+
+    else
+    {
+        <option @onselect="ChangeColumns1">1 Column</option>
+    }
+
+    @if (StandardModel.ColumnCount == 2)
+    {
+        <option selected @onselect="ChangeColumns2">2 Columns</option>
+    }
+
+    else
+    {
+        <option @onselect="ChangeColumns2">2 Columns</option>
+    }
+
+    @if (StandardModel.ColumnCount == 3)
+    {
+        <option selected @onselect="ChangeColumns3">3 Columns</option>
+    }
+
+    else
+    {
+        <option @onselect="ChangeColumns3">3 Columns</option>
+    }
+
+    @if (StandardModel.ColumnCount == 4)
+    {
+        <option selected @onselect="ChangeColumns4">4 Columns</option>
+    }
+
+    else
+    {
+        <option @onselect="ChangeColumns4">4 Columns</option>
+    }
+
+    @if (StandardModel.ColumnCount == 5)
+    {
+        <option selected @onselect="ChangeColumns5">5 Columns</option>
+    }
+
+    else
+    {
+        <option @onselect="ChangeColumns5">5 Columns</option>
+    }
+
+    @* <option @onselect="ChangeColumns2">2 Columns</option>
+    <option selected @onselect="ChangeColumns3">3 Columns</option>
+    <option @onselect="ChangeColumns4">4 Columns</option>
+    <option @onselect="ChangeColumns5">5 Columns</option> *@
 </select>
 
-@code {
+<p>@StandardModel.EditColumnCount(LocalColumnCount)</p>
+
+@code 
+{
+    int LocalColumnCount { get; set; }
+
     protected override void OnInitialized()
     {
         StandardModel.IsSettings = true;
     }
 
-    void OnSelected1()
-    {
-        var a = Foo(StandardModel.TableValues);
-    }
-
-    string Foo<T>(T parameter) 
-    { 
-        return typeof(T).Name; 
-    }
+    void ChangeColumns1() => LocalColumnCount = 1;
+    void ChangeColumns2() => LocalColumnCount = 2;
+    void ChangeColumns3() => LocalColumnCount = 3;
+    void ChangeColumns4() => LocalColumnCount = 4;
+    void ChangeColumns5() => LocalColumnCount = 5;
 
     object ConvertNumber(int i)
     {
