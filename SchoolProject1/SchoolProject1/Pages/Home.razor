@@ -42,20 +42,84 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in TableValuesTemp)
-                            {
-                                <tr>
+                        @foreach (var item in TableValuesTemp5)
+                        {
+                            <tr>
+                                @if (StandardModel.ColumnCount == 1)
+                                {
                                     <td>
-                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" class="center w-100" />
+                                    </td>
+                                }
+
+                                @if (StandardModel.ColumnCount == 2)
+                                {
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" class="center w-100" />
+                                    </td>
+                                }
+
+                                @if (StandardModel.ColumnCount == 3)
+                                {
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" class="center w-100" />
                                     </td>
                                     <td>
-                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn3(item, e))" value="@item.Column3" class="center w-100" />
                                     </td>
+                                }
+
+                                @if (StandardModel.ColumnCount == 4)
+                                {
                                     <td>
-                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn3(item, e))" value="@item.Column3" />
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" class="center w-100" />
                                     </td>
-                                </tr>
-                            }
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn3(item, e))" value="@item.Column3" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn4(item, e))" value="@item.Column4" class="center w-100" />
+                                    </td>
+                                }
+
+                                @if (StandardModel.ColumnCount == 5)
+                                {
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn1(item, e))" value="@item.Column1" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn2(item, e))" value="@item.Column2" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn3(item, e))" value="@item.Column3" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn4(item, e))" value="@item.Column4" class="center w-100" />
+                                    </td>
+
+                                    <td>
+                                        <input role="textbox" rows="1" @oninput="((e) => EditColumn5(item, e))" value="@item.Column5" class="center w-20" />
+                                    </td>
+                                }
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -65,7 +129,7 @@
                 <br />
                 <br />
 
-                @for (int i = 0; i < TableValuesTemp.Count; i++)
+                @for (int i = 0; i < TableValuesTemp3.Count; i++)
                 {
                     var j = i;
 
@@ -118,22 +182,16 @@
 
 @code
 {
-    private List<TableValues3> _tableValues = new();
-
-    private List<TableValues3> TableValuesTemp
-    {
-        get 
-        {
-            return _tableValues;
-        }
-        set 
-        {
-            _tableValues = value; 
-        }
-    }
+    List<TableValues1> TableValuesTemp1 { get; set; } = TableValues.Table1;
+    List<TableValues2> TableValuesTemp2 { get; set; } = TableValues.Table2;
+    List<TableValues3> TableValuesTemp3 { get; set; } = TableValues.Table3;
+    List<TableValues4> TableValuesTemp4 { get; set; } = TableValues.Table4;
+    List<TableValues5> TableValuesTemp5 { get; set; } = TableValues.Table5;
 
     protected override void OnInitialized()
     {
+        var a = TableValues.Table1;
+
         StandardModel.IsSettings = false;
     }
 
@@ -141,38 +199,101 @@
     string GetDate() => $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}";
 
     void AddInstances() 
-    { 
-        TableValuesTemp.Add(new());
-        TableValuesTemp.Cast<object>().ToList().Update();
+    {
+        TableValuesTemp1.Add(new());
+        TableValuesTemp2.Add(new());
+        TableValuesTemp3.Add(new());
+        TableValuesTemp4.Add(new());
+        TableValuesTemp5.Add(new());
+        TableValuesTemp5.Cast<object>().ToList().Update();
+        LocalUpdate(TableValuesTemp5);
     }
 
     void DeleteIndex(int i)
     { 
-        TableValuesTemp.RemoveAt(i);
-        TableValuesTemp.Cast<object>().ToList().Update();
+        TableValuesTemp1.RemoveAt(i);
+        TableValuesTemp2.RemoveAt(i);
+        TableValuesTemp3.RemoveAt(i);
+        TableValuesTemp4.RemoveAt(i);
+        TableValuesTemp5.RemoveAt(i);
+        TableValuesTemp5.Cast<object>().ToList().Update();
+        LocalUpdate(TableValuesTemp5);
     }
 
-    void EditColumn1(TableValues3 item, ChangeEventArgs e)
+    void EditColumn1(TableValues5 item, ChangeEventArgs e)
     {
-        int index = TableValuesTemp.IndexOf(item);
+        int index = TableValuesTemp5.IndexOf(item);
 
-        TableValuesTemp[index].Column1 = e.Value.ToString();
-        TableValuesTemp.Cast<object>().ToList().Update();
+        TableValuesTemp1[index].Column1 = e.Value.ToString();
+        TableValuesTemp2[index].Column1 = e.Value.ToString();
+        TableValuesTemp3[index].Column1 = e.Value.ToString();
+        TableValuesTemp4[index].Column1 = e.Value.ToString();
+        TableValuesTemp5[index].Column1 = e.Value.ToString();
+        TableValuesTemp3.Cast<object>().ToList().Update();
     }
 
-    void EditColumn2(TableValues3 item, ChangeEventArgs e)
+    void EditColumn2(TableValues5 item, ChangeEventArgs e)
     {
-        int index = TableValuesTemp.IndexOf(item);
+        int index = TableValuesTemp5.IndexOf(item);
 
-        TableValuesTemp[index].Column2 = e.Value.ToString();
-        TableValuesTemp.Cast<object>().ToList().Update();
+        TableValuesTemp2[index].Column2 = e.Value.ToString();
+        TableValuesTemp3[index].Column2 = e.Value.ToString();
+        TableValuesTemp4[index].Column2 = e.Value.ToString();
+        TableValuesTemp5[index].Column2 = e.Value.ToString();
+        TableValuesTemp3.Cast<object>().ToList().Update();
     }
 
-    void EditColumn3(TableValues3 item, ChangeEventArgs e)
+    void EditColumn3(TableValues5 item, ChangeEventArgs e)
     {
-        int index = TableValuesTemp.IndexOf(item);
+        int index = TableValuesTemp5.IndexOf(item);
 
-        TableValuesTemp[index].Column3 = e.Value.ToString();
-        TableValuesTemp.Cast<object>().ToList().Update();
+        TableValuesTemp3[index].Column3 = e.Value.ToString();
+        TableValuesTemp4[index].Column3 = e.Value.ToString();
+        TableValuesTemp5[index].Column3 = e.Value.ToString();
+        TableValuesTemp3.Cast<object>().ToList().Update();
     }
+
+    void EditColumn4(TableValues5 item, ChangeEventArgs e)
+    {
+        int index = TableValuesTemp5.IndexOf(item);
+
+        TableValuesTemp4[index].Column4 = e.Value.ToString();
+        TableValuesTemp5[index].Column4 = e.Value.ToString();
+        TableValuesTemp3.Cast<object>().ToList().Update();
+    }
+
+    void EditColumn5(TableValues5 item, ChangeEventArgs e)
+    {
+        int index = TableValuesTemp5.IndexOf(item);
+
+        TableValuesTemp5[index].Column5 = e.Value.ToString();
+        TableValuesTemp3.Cast<object>().ToList().Update();
+    }
+
+    void LocalUpdate(List<TableValues5> tableValues)
+    {
+        for (int i = 0; i < tableValues.Count; i++)
+        {
+            TableValuesTemp1[i].Column1 = tableValues[i].Column1;
+            TableValuesTemp1[i].Column1 = tableValues[i].Column1;
+            TableValuesTemp1[i].Column1 = tableValues[i].Column1;
+            TableValuesTemp1[i].Column1 = tableValues[i].Column1;
+            TableValuesTemp1[i].Column1 = tableValues[i].Column1;
+
+            TableValuesTemp2[i].Column2 = tableValues[i].Column2;
+            TableValuesTemp2[i].Column2 = tableValues[i].Column2;
+            TableValuesTemp2[i].Column2 = tableValues[i].Column2;
+            TableValuesTemp2[i].Column2 = tableValues[i].Column2;
+
+            TableValuesTemp3[i].Column3 = tableValues[i].Column3;
+            TableValuesTemp3[i].Column3 = tableValues[i].Column3;
+            TableValuesTemp3[i].Column3 = tableValues[i].Column3;
+
+            TableValuesTemp4[i].Column4 = tableValues[i].Column4;
+            TableValuesTemp4[i].Column4 = tableValues[i].Column4;
+
+            //TableValuesTemp5[i].Column5 = tableValues[i].Column5;
+        }
+    }
+}
 }
