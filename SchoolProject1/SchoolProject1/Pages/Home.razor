@@ -4,15 +4,41 @@
 
 <html>
     <body>
+        
+        <div class="top-row px-4 w-100">
+            <a style="float: left" class="btn btn-primary" href="settings">Settings</a>
+        </div>
+
         <div style="width: 100%; overflow:auto;" class="vh-100">
             <div style="width: 60%; border-right-style: solid; border-right-width: 1px; float: left" class="vh-100">
                 <div style="width: 90%; float: left">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
+                                @if (StandardModel.ColumnCount >= 1)
+                                {
+                                    <th class="center">Column 1</th>
+                                }
+
+                                @if (StandardModel.ColumnCount >= 2)
+                                {
+                                    <th class="center">Column 2</th>
+                                }
+
+                                @if (StandardModel.ColumnCount >= 3)
+                                {
+                                    <th class="center">Column 3</th>
+                                }
+
+                                @if (StandardModel.ColumnCount >= 4)
+                                {
+                                    <th class="center">Column 4</th>
+                                }
+
+                                @if (StandardModel.ColumnCount >= 5)
+                                {
+                                    <th class="center">Column 5</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>

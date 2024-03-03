@@ -1,78 +1,39 @@
 ﻿@page "/settings"
+@inject NavigationManager _nav
 
 <PageTitle>Settings</PageTitle>
 
+<div class="top-row px-4 w-100">
+    <a style="float: left" class="btn btn-primary" href="">Back To Home</a>
+</div>
+
+<br/>
+
 <h1 class="w-100 text-center">Settings</h1>
 
-<select class="form-select" aria-label="Default select example" style="width: 200px">
-    @if (StandardModel.ColumnCount == 1)
-    {
-        <option selected @onselect="ChangeColumns1">1 Column</option>
-    }
-
-    else
-    {
-        <option @onselect="ChangeColumns1">1 Column</option>
-    }
-
-    @if (StandardModel.ColumnCount == 2)
-    {
-        <option selected @onselect="ChangeColumns2">2 Columns</option>
-    }
-
-    else
-    {
-        <option @onselect="ChangeColumns2">2 Columns</option>
-    }
-
-    @if (StandardModel.ColumnCount == 3)
-    {
-        <option selected @onselect="ChangeColumns3">3 Columns</option>
-    }
-
-    else
-    {
-        <option @onselect="ChangeColumns3">3 Columns</option>
-    }
-
-    @if (StandardModel.ColumnCount == 4)
-    {
-        <option selected @onselect="ChangeColumns4">4 Columns</option>
-    }
-
-    else
-    {
-        <option @onselect="ChangeColumns4">4 Columns</option>
-    }
-
-    @if (StandardModel.ColumnCount == 5)
-    {
-        <option selected @onselect="ChangeColumns5">5 Columns</option>
-    }
-
-    else
-    {
-        <option @onselect="ChangeColumns5">5 Columns</option>
-    }
-
-    @* <option @onselect="ChangeColumns2">2 Columns</option>
-    <option selected @onselect="ChangeColumns3">3 Columns</option>
-    <option @onselect="ChangeColumns4">4 Columns</option>
-    <option @onselect="ChangeColumns5">5 Columns</option> *@
-</select>
-
-<p>@StandardModel.EditColumnCount(LocalColumnCount)</p>
+<input type="text" class="input-group" style="width: 200px" @onchange="((e) => ChangeColumns1(e))" value="@StandardModel.ColumnCount" />
 
 @code 
 {
-    int LocalColumnCount { get; set; }
+    int LocalColumnCount { get; set; } // = StandardModel.ColumnCount;
 
     protected override void OnInitialized()
     {
         StandardModel.IsSettings = true;
     }
 
-    void ChangeColumns1() => LocalColumnCount = 1;
+    void ChangeColumns1(ChangeEventArgs e) 
+    {
+        int i = StandardModel.ColumnCount;
+
+        if (int.TryParse(e.Value.ToString(), out int result) && result <= 5 && result >= 1)
+        {
+            i = result;
+        }
+
+        StandardModel.EditColumnCount(i);
+    }
+
     void ChangeColumns2() => LocalColumnCount = 2;
     void ChangeColumns3() => LocalColumnCount = 3;
     void ChangeColumns4() => LocalColumnCount = 4;
@@ -87,4 +48,10 @@
         else if (i == 5) return typeof(TableValues5);
         else return null;
     }
+
+    // void Refresh()
+    // {
+    //     _nav.Refresh();
+    //     _nav.NavigateTo("");
+    // }
 }
