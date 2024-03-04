@@ -149,7 +149,7 @@
                 <br/>
 
                 <h1 style="width: 100%; text-align: center; font-size: 100px">@GetTime()</h1>
-                <h2 style="width: 100%; text-align: center; font-size: 50px">@GetDate()</h2>
+                <h2 style="width: 100%; text-align: center; font-size: 60px">@GetDate()</h2>
             </div>
 
             <div style="width: 40%; float: right" class="h-50">
@@ -187,16 +187,49 @@
     List<TableValues3> TableValuesTemp3 { get; set; } = TableValues.Table3;
     List<TableValues4> TableValuesTemp4 { get; set; } = TableValues.Table4;
     List<TableValues5> TableValuesTemp5 { get; set; } = TableValues.Table5;
+    static System.Timers.Timer _timer;
+    int _counter = 60;
+    string Time { get; set; } = GetTime();
+    string Date { get; set; } = GetDate();
+
+    public async void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        if (_counter > 0)
+        {
+            Time = GetTime();
+            Date = GetDate();
+        }
+        else
+        {
+            _timer.Enabled = false;
+        }
+
+        await InvokeAsync(async () =>
+        {
+            StateHasChanged();
+        });
+    }
 
     protected override void OnInitialized()
     {
-        var a = TableValues.Table1;
-
         StandardModel.IsSettings = false;
+
+        _timer = new System.Timers.Timer(1000);
+        _timer.Elapsed += CountDownTimer;
+        _timer.Enabled = true;
+
     }
 
-    string GetTime() => $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}";
-    string GetDate() => $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}";
+    static string GetTime() 
+    {
+        return $"{DateTime.Now.ToString().Split(' ')[1]} {DateTime.Now.ToString().Split(' ')[2]}";
+        // return $"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}";
+    }
+    
+    static string GetDate()
+    {
+        return  $"{DateTime.Now.Day}.{DateTime.Now.Month}.{DateTime.Now.Year}";
+    }
 
     void AddInstances() 
     {
@@ -291,8 +324,6 @@
 
             TableValuesTemp4[i].Column4 = tableValues[i].Column4;
             TableValuesTemp4[i].Column4 = tableValues[i].Column4;
-
-            //TableValuesTemp5[i].Column5 = tableValues[i].Column5;
         }
     }
 }
